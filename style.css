@@ -23,5 +23,22 @@ nav a {
   text-align: center;
   padding: 0.5em;
 
+}
 
+nav a.current {
+  border-bottom: 0.4em solid oklch(80% 3% 200);
+  padding-bottom: 0.1em
+}
+
+a:hover {
+  color: var(--color-accent);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
+}
+
+:root{
+  --color-accent: oklch(60% 0.25 30);
+}
+
+html {
+  accent-color: var(--color-accent);
 }
