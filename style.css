@@ -42,3 +42,71 @@ a:hover {
 html {
   accent-color: var(--color-accent);
 }
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+}
+
+.projects article {
+  display:grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  gap: 1em;
+}
+
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 400%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+form {
+  display:grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+}
+
+label{
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+button {
+  display: grid;
+  grid-column: 1 / -1;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+ul {
+  padding-left: 1.25em;
+  margin-bottom: 1.5em;
+}
+
+ul li {
+  margin-bottom: 0.5em;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.cv-section-title {
+  border-bottom: 1px solid var(--color-accent)
+}
+
+.cv-subheading {
+  color: oklch(40% 0.1 30)
+}
