@@ -13,7 +13,7 @@ document.body.prepend(nav);
 
 const BASE_PATH = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
     ? "/"
-    : "/website/";
+    : "/portfolio/";
 
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const autoLabel = prefersDark ? 'Automatic (Dark)' : 'Automatic (Light)';
