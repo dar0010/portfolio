@@ -120,3 +120,20 @@ input, textarea, button, select {
   font-family: inherit;
 
 }
+
+dl {
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
+  
+  
+}
+
+dt {
+  grid-row: 1;
+  font-weight: bold;
+  
+}
+
+dd {
+  grid-row: 2;
+}
