@@ -163,6 +163,7 @@ dd {
   grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
   gap: 1em;
   border: 1px solid oklch(50% 10% 200 / 40%);
+  border-radius: 0.5em;
   padding: 0.5em;
   margin: 1.5em 0;
   flex: 1;
@@ -180,4 +181,43 @@ dd {
   align-items: center;
   gap: 1em;
 
+}
+
+.searchBar {
+  width: 100%;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: 1px solid oklch(50% 10% 200 / 40%);
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  margin-bottom: 1.5em;
+  
+}
+
+&:has(path:hover) {
+  path:not(:hover) {
+    opacity: 0.5;
+  }
+}
+
+path {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+
+  &:is(path) {
+    fill: var(--color);
+  }
+}
+
+.legend-li.selected {
+  /* background-color: var(--color); */
+  /* color: white; */
+  font-weight: bold;
+  border-radius: 0.3em;
+  cursor: pointer;
+  /* padding: 0.2em 0.5em; */
 }
