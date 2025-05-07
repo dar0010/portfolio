@@ -15,3 +15,14 @@ async function loadData() {
 let data = await loadData();
 let commits = d3.groups(data, (d) => d.commit);
 console.log(commits);
+
+function processCommits(data) {
+    return d3
+        .groups(data, (d) => d.commit)
+        .map(([commit, lines]) => {
+            let first = lines[0];
+            console.log(first[1][0].author);
+        })
+}
+
+processCommits(commits);
