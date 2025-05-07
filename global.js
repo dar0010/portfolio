@@ -3,8 +3,9 @@ console.log("IT'S ALIVE");
 let pages = [
 {url: '', title: 'Home'},
 {url: 'projects/', title: 'Projects'},
-{url: 'contact/', title: 'Contact'},
 {url: 'CV/', title: 'CV'},
+{url: 'contact/', title: 'Contact'},
+{url: 'meta/', title: 'Meta'},
 {url: 'https://github.com/dar0010', title: 'My GitHub'},
 ];
 
