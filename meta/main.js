@@ -73,6 +73,7 @@ function processCommits(data) {
   }
 
   function renderScatterPlot(data, commits) {
+    const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
     const width = 1000;
     const height = 600;
     const svg = d3
@@ -86,11 +87,22 @@ function processCommits(data) {
         .range([0, width])
         .nice();
     const yScale = d3.scaleLinear().domain([0,24]).range([height, 0]);
+    const margin = {top: 10, right: 10, bottom: 30, left: 20};
+    const usableArea = {
+        top: margin.top,
+        right: width - margin.right,
+        bottom: height - margin.bottom,
+        left: margin.left,
+        width: width - margin.left - margin.right,
+        height: height - margin.top - margin.bottom,
+    };
+    xScale.range([usableArea.left, usableArea.right]);
+    yScale.range([usableArea.bottom, usableArea.top]);
     const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
-    const rScale = d3.scaleLinear().domain([minLines, maxLines]).range([3,30]);
+    const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2,15]);
     const dots = svg.append('g').attr('class', 'dots');
     dots.selectAll('circle')
-        .data(commits)
+        .data(sortedCommits)
         .join('circle')
         .attr('cx', (d) => xScale(d.datetime))
         .attr('cy', (d) => yScale(d.hourFrac))
@@ -106,17 +118,8 @@ function processCommits(data) {
             d3.select(event.currentTarget).style('fill-opacity', 0.7);
             updateTooltipVisibility(false);
         });
-    const margin = {top: 10, right: 10, bottom: 30, left: 20};
-    const usableArea = {
-        top: margin.top,
-        right: width - margin.right,
-        bottom: height - margin.bottom,
-        left: margin.left,
-        width: width - margin.left - margin.right,
-        height: height - margin.top - margin.bottom,
-    };
-    xScale.range([usableArea.left, usableArea.right]);
-    yScale.range([usableArea.bottom, usableArea.top]);
+    
+    
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3
                     .axisLeft(yScale)
