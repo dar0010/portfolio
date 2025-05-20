@@ -294,3 +294,12 @@ circle:hover {
 circle.selected {
   fill: #ff6b6b;
 }
+
+#commit-slider-div {
+  flex: 1;
+  align-items: baseline;
+}
+
+#commit-slider-time {
+  margin-left: auto;
+}
