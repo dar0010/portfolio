@@ -251,7 +251,10 @@ function processCommits(data) {
     }
   }
 
-  // lab 8 material
+  
+  let data = await loadData();
+  let commits = processCommits(data);
+  //lab8  
   let commitProgress = 100;
   let timeScale = d3.scaleTime(
     [d3.min(commits, (d) => d.datetime), d3.max(commits, (d) => d.datetime)],
@@ -259,8 +262,7 @@ function processCommits(data) {
   );
   let commitMaxTime = timeScale.invert(commitProgress);
 
-  let data = await loadData();
-  let commits = processCommits(data);
+  
   renderCommitInfo(data, commits);
   renderScatterPlot(data, commits);
   
