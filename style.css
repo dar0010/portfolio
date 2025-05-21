@@ -300,6 +300,18 @@ circle.selected {
   align-items: baseline;
 }
 
+#commit-slider {
+  display: flex;
+  flex: 1;
+  
+}
+
+#commit-slider-label {
+  /* display: flex; */
+  /* width: 100%; */
+  /* margin-left: 1.5em; */
+}
+
 #commit-slider-time {
   margin-left: auto;
 }

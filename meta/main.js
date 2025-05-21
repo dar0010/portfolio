@@ -260,9 +260,21 @@ function processCommits(data) {
     [d3.min(commits, (d) => d.datetime), d3.max(commits, (d) => d.datetime)],
     [0, 100],
   );
+  d3.select('#commit-slider').property('value', commitProgress);
   let commitMaxTime = timeScale.invert(commitProgress);
-
+  const selectedTime = d3.select('#commit-slider-time');
+  selectedTime.textContent = timeScale.invert(commitProgress).toLocaleString({ dateStyle: "long", timeStyle: "short" });
+  d3.select('#commit-slider-time')
+        .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
   
+  d3.select('#commit-slider')
+    .on('input', function() {
+      let commitProgress = +this.value;
+      let commitMaxTime = timeScale.invert(commitProgress);
+      d3.select('#commit-slider-time')
+        .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
+    });
+
   renderCommitInfo(data, commits);
   renderScatterPlot(data, commits);
   
