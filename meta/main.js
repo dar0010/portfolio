@@ -71,12 +71,15 @@ function processCommits(data) {
     dl.append('dt').text('Total files');
     dl.append('dd').text(totalUniqueFiles);
   }
+
   let xScale;
   let yScale;
-  function renderScatterPlot(data, commits) {
-    const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
+  function updateScatterPlot(data, filteredCommits) {
+    const sortedCommits = d3.sort(filteredCommits, (d) => -d.totalLines);
     const width = 1000;
     const height = 600;
+    d3.select('svg').remove();
     const svg = d3
         .select('#chart')
         .append('svg')
@@ -84,7 +87,7 @@ function processCommits(data) {
         .style('overflow', 'visible');
     xScale = d3
         .scaleTime()
-        .domain(d3.extent(commits, (d) => d.datetime))
+        .domain(d3.extent(filteredCommits, (d) => d.datetime))
         .range([0, width])
         .nice();
     yScale = d3.scaleLinear().domain([0,24]).range([height, 0]);
@@ -99,9 +102,11 @@ function processCommits(data) {
     };
     xScale.range([usableArea.left, usableArea.right]);
     yScale.range([usableArea.bottom, usableArea.top]);
-    const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+    const [minLines, maxLines] = d3.extent(filteredCommits, (d) => d.totalLines);
     const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2,15]);
+    svg.selectAll('g').remove();
     const dots = svg.append('g').attr('class', 'dots');
+    dots.selectAll('circle').remove();
     dots.selectAll('circle')
         .data(sortedCommits)
         .join('circle')
@@ -252,30 +257,62 @@ function processCommits(data) {
   }
 
   
+  function updateTimeDisplay() {
+    commitProgress = Number(timeSlider.value);
+  }
+
   let data = await loadData();
   let commits = processCommits(data);
-  //lab8  
+  //lab8
+  let filteredCommits = [];
   let commitProgress = 100;
+
+  const timeSlider = document.getElementById('commit-slider');
+  const selectedTime = d3.select('#commit-slider-time');
+
   let timeScale = d3.scaleTime(
     [d3.min(commits, (d) => d.datetime), d3.max(commits, (d) => d.datetime)],
     [0, 100],
   );
-  d3.select('#commit-slider').property('value', commitProgress);
-  let commitMaxTime = timeScale.invert(commitProgress);
-  const selectedTime = d3.select('#commit-slider-time');
-  selectedTime.textContent = timeScale.invert(commitProgress).toLocaleString({ dateStyle: "long", timeStyle: "short" });
-  d3.select('#commit-slider-time')
-        .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
-  
-  d3.select('#commit-slider')
-    .on('input', function() {
-      let commitProgress = +this.value;
-      let commitMaxTime = timeScale.invert(commitProgress);
-      d3.select('#commit-slider-time')
-        .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
-    });
 
+  timeSlider.value = commitProgress;
+
+  function filterCommitsByTime(commitMaxTime) {
+    filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
+  }
+
+  function updateTimeDisplay() {
+    commitProgress = Number(timeSlider.value);
+    let commitMaxTime = timeScale.invert(commitProgress);
+    
+    selectedTime.text(commitMaxTime.toLocaleString({dateStyle: "long", timeStyle: "short"}));
+    filterCommitsByTime(commitMaxTime);
+    updateScatterPlot(data, filteredCommits);
+  }
+
+  timeSlider.addEventListener('input', updateTimeDisplay);
   renderCommitInfo(data, commits);
-  renderScatterPlot(data, commits);
+  updateTimeDisplay();
   
+  // let filteredCommits;  
+  // let commitProgress = 100;
+  // let timeScale = d3.scaleTime(
+  //   [d3.min(commits, (d) => d.datetime), d3.max(commits, (d) => d.datetime)],
+  //   [0, 100],
+  // );
+  // d3.select('#commit-slider').property('value', commitProgress);
+  // let commitMaxTime = timeScale.invert(commitProgress);
+  // const selectedTime = d3.select('#commit-slider-time');
+  // selectedTime.textContent = timeScale.invert(commitProgress).toLocaleString({ dateStyle: "long", timeStyle: "short" });
+  // d3.select('#commit-slider-time')
+  //       .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
   
+  // filteredCommits = 
+  
+  // d3.select('#commit-slider')
+  //   .on('input', function() {
+  //     let commitProgress = +this.value;
+  //     let commitMaxTime = timeScale.invert(commitProgress);
+  //     d3.select('#commit-slider-time')
+  //       .text(commitMaxTime.toLocaleString({dataStyle: 'long', timeStyle: 'short'}));
+  //   });
