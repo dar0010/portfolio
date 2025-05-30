@@ -333,6 +333,7 @@ circle.selected {
   aspect-ratio: 1;
   background: var(--color);
   border-radius: 50%;
+  transition: 200ms;
 }
 
 #files dd {
