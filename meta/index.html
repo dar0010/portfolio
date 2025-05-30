@@ -7,13 +7,22 @@
     <link rel="stylesheet" href="../style.css" />
 </head>
 <script type="module" src="../global.js"></script>
-<script type="module" src='main.js'></script>
+<script type="module" src='meta.js'></script>
 <body>
     <h1>Meta</h1>
     <p>This page includes stats about the code of this website.</p>
     
-    <div id="stats"></div>
-    <h2 id="chart-title">Commits by time of day</h2>
+    <div id="commit-slider-div">
+        <label>
+          Show Commits until:
+          <input type="range" min="0" max="100" id="commit-progress">
+          <time id="commit-time"></time>
+        </label>
+    </div>
+
+    
+    <!-- <div id="stats"></div> -->
+    
     
     <dl id="commit-tooltip" class="info tooltip" hidden>
         <dt>Commit</dt>
@@ -26,17 +35,25 @@
       
         <!-- Add: Time, author, lines edited -->
       </dl>
-
-      <div id="commit-slider-div">
-        <label id="commit-slider-label">
-          Show Commits until:
-          <input id="commit-slider" type="range" min="0" max="100">
-          <time id="commit-slider-time"></time>
-        </label>
+      <div id="scrolly-1">
+        <div id="scatter-story"></div>
+        <div id="scatter-plot">
+          <div id="stats"></div>
+          <h2 id="chart-title">Commits by time of day</h2>
+          <div id="chart"></div>
+          <p id="selection-count">No commits selected</p>
+          <dl id="language-breakdown" class="stats"></dl>
+        </div>
       </div>
-    
-      <div id="chart"></div>
-      <p id="selection-count">No commits selected</p>
-      <dl id="language-breakdown" class="stats"></dl>
+      <p> <br> <br> <br> </p>
+      <div id="scrolly-2">
+        <div id="unitvis-story"></div>
+
+        <div id="unitvis-graphic">
+          <h2>Files and their Sizes</h2>
+          <dl id="files"></dl>
+        </div>
+      </div>
+
 </body>
 </html>
