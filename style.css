@@ -407,7 +407,7 @@ dt small {
 #unitvis-story::after {
   content: '';
   display: block;
-  height: 62vh; /* or more if needed */
+  height: 70vh; /* or more if needed */
 }
 
 #scatter-story::after {
