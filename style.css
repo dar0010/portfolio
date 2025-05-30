@@ -371,7 +371,7 @@ dt small {
   top: 0;
   left: 0;
   bottom: auto;
-  height: 50vh;
+  height: 55vh;
 }
 
 .step {
@@ -397,7 +397,7 @@ dt small {
   top: 0;
   left: 0;
   bottom: auto;
-  height: 50vh;
+  height: 60vh;
 }
 
 #unitvis-story .step {
@@ -407,11 +407,11 @@ dt small {
 #unitvis-story::after {
   content: '';
   display: block;
-  height: 52vh; /* or more if needed */
+  height: 62vh; /* or more if needed */
 }
 
 #scatter-story::after {
   content: '';
   display: block;
-  height: 52vh; /* or more if needed */
+  height: 57vh; /* or more if needed */
 }
