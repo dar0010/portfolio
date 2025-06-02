@@ -229,6 +229,7 @@ path {
   border-radius: 0.5em;
   box-sizing: border-box;
   padding: 0.5em;
+  gap: 1em;
   
 }
 
@@ -333,7 +334,7 @@ circle.selected {
   aspect-ratio: 1;
   background: var(--color);
   border-radius: 50%;
-  transition: 200ms;
+  transition: opacity 0.4s ease;
 }
 
 #files dd {

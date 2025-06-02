@@ -52,19 +52,19 @@ function renderCommitInfo(data, commits) {
   dl.append('dt').html('Total <abbr title="Lines of code">LOC</abbr>');
   dl.append('dd').attr('class', 'loc-commit-info').text(data.length);
 
-  dl.append('dt').text('Total commits');
+  dl.append('dt').text('Total Commits');
   dl.append('dd').attr('class', 'total-commits').text(commits.length);
 
-  dl.append('dt').text('Longest line');
+  dl.append('dt').text('Longest Line');
   dl.append('dd').attr('class', 'longest-line').text(maxLength);
 
-  dl.append('dt').text('Max file length (in lines)');
+  dl.append('dt').text('Max File Length');
   dl.append('dd').attr('class', 'max-length').text(maxLine);
 
-  dl.append('dt').text('Max depth');
+  dl.append('dt').text('Max Depth');
   dl.append('dd').attr('class', 'max-depth').text(maxDepth);
 
-  dl.append('dt').text('Total files');
+  dl.append('dt').text('Total Files');
   dl.append('dd').attr('class', 'total-files').text(totalUniqueFiles);
 }
 
@@ -337,7 +337,7 @@ let timeScale = d3.scaleTime().domain([
 let commitMaxTime = timeScale.invert(commitProgress);
 
 const slider = document.getElementById('commit-progress');
-slider.value = commitProgress;
+slider.value = 0;
 const time = document.getElementById('commit-time');
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
@@ -366,9 +366,19 @@ function updateFileDisplay(filteredCommits){
     .select('dd')
     .selectAll('div')
     .data((d) => d.lines)
-    .join('div')
-    .attr('class', 'loc')
+    .join(
+      enter => enter.append('div')
+        .attr('class', 'loc')
+        .style('opacity', 0)
+        .transition()
+        .duration(400)
+        .style('opacity', 1),
+      update => update,
+      exit => exit.remove()
+    )
     .attr('style', (d) => `--color: ${colors(d.type)}`);
+    // .attr('class', 'loc')
+    // .attr('style', (d) => `--color: ${colors(d.type)}`);
   
   filesContainer.select('dt > small')
     .text(d => `${d.lines.length} lines`);
